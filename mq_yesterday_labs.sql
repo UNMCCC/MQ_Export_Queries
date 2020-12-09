@@ -9,8 +9,8 @@ Set NOCOUNT On
   CONVERT(CHAR(10),Orders.Start_DtTm,112) as startAppDtTm, -- start
   QUOTENAME(ISNULL(dbo.fn_GetStaffName(Orders.Ord_Provider,'NAMELF'),''),'"') Ordering_Prov,--ordering md
   CPT.Hsp_Code as code, --code
-  ISNULL(QUOTENAME(CPT.Description,'"'),'') as Lab --desc
---  ISNULL(QUOTENAME(Orders.Condition,'"'),'')as  comment
+  ISNULL(QUOTENAME(CPT.Description,'"'),'') as Lab, --desc
+  ISNULL(QUOTENAME(Orders.Condition,'"'),'')as  cond
 
 
  FROM   ((((Orders 
@@ -19,6 +19,7 @@ Set NOCOUNT On
  LEFT OUTER JOIN Patient  ON Orders.Pat_ID1=Patient.Pat_ID1) 
  LEFT OUTER JOIN Ident ON Orders.Pat_ID1=Ident.Pat_Id1) 
  LEFT OUTER JOIN CPT  ON ObsReq.Hsp_Code=CPT.Hsp_Code
+ 
 
  WHERE Admin.Expired_DtTm IS  NULL  
  AND Patient.Clin_Status<>4 
