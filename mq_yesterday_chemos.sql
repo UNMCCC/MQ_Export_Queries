@@ -16,8 +16,8 @@ INNER JOIN MOSAIQ.dbo.PharmOrd RXO on orc.orc_set_id = rxo.ORC_set_ID and RXO.Ve
 LEFT JOIN MOSAIQ.dbo.Drug on  RXO.Req_Give_Code = Drug.drg_id
 
 WHERE 
-  orc.Start_dtTm >= dateadd(day,-2,getdate()) 
- AND orc.Start_dtTm  <= getdate()
+ convert(varchar(8),orc.Start_dtTm,112) >= convert(varchar(8),dateadd(day,-1,getdate()),112) 
+ AND convert(varchar(8),orc.Start_dtTm,112)  < convert(varchar(8),getdate(),112)
  AND orc.version = 0		       -- select tip records only 
  AND (  orc.Status_Enum = 5 OR orc.Status_enum = 18 
      OR orc.Status_Enum = 3 OR orc.Status_enum = 2 
