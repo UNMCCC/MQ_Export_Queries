@@ -26,8 +26,10 @@ Set NOCOUNT On
  AND (Orders.Order_Type=1 or Orders.Order_Type=4)
  AND Orders.Version=0 
  AND ObsReq.Version=0 
- AND Orders.Start_DtTm >= dateadd(day,-1,GETDATE())  -- Yesterday
- AND Orders.Start_DtTm <= GETDATE() 
+ AND convert(varchar(8),Orders.Start_dtTm,112) >= convert(varchar(8),dateadd(day,-1,getdate()),112) 
+ AND convert(varchar(8),Orders.Start_dtTm,112) < convert(varchar(8),getdate(),112)
+ --AND Orders.Start_DtTm >= dateadd(day,-1,GETDATE())  -- Yesterday
+-- AND Orders.Start_DtTm <= GETDATE() 
  AND CPT.CGroup='LAB' 
  AND Orders.Inst_ID<=2 --CRTC or RO
  
