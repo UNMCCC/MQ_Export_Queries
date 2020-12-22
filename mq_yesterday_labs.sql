@@ -10,7 +10,7 @@ Set NOCOUNT On
   QUOTENAME(ISNULL(dbo.fn_GetStaffName(Orders.Ord_Provider,'NAMELF'),''),'"') Ordering_Prov,--ordering md
   CPT.Hsp_Code as code, --code
   ISNULL(QUOTENAME(CPT.Description,'"'),'') as Lab, --desc
-  ISNULL(QUOTENAME(Orders.Condition,'"'),'')as  cond
+  ISNULL(QUOTENAME(Orders.Condition,'"'),'')as  cond ,DATENAME(DW, GETDATE())
 
 
  FROM   ((((Orders 
@@ -26,7 +26,11 @@ Set NOCOUNT On
  AND (Orders.Order_Type=1 or Orders.Order_Type=4)
  AND Orders.Version=0 
  AND ObsReq.Version=0 
- AND convert(varchar(8),Orders.Start_dtTm,112) >= convert(varchar(8),dateadd(day,-1,getdate()),112) 
+ AND convert(varchar(8),Orders.Start_dtTm,112) >= CASE
+		WHEN DATENAME(DW, GETDATE()) = 'Monday' -- check if today is a Monday
+			THEN convert(varchar(8),dateadd(day,-3,getdate()),112) -- pulls last 3 days if Monday
+			ELSE convert(varchar(8),dateadd(day,-1,getdate()),112) -- pulls yesterday if not a Monday
+		END
  AND convert(varchar(8),Orders.Start_dtTm,112) < convert(varchar(8),getdate(),112)
  --AND Orders.Start_DtTm >= dateadd(day,-1,GETDATE())  -- Yesterday
 -- AND Orders.Start_DtTm <= GETDATE() 
