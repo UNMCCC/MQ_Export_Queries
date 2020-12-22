@@ -16,7 +16,11 @@ INNER JOIN MOSAIQ.dbo.PharmOrd RXO on orc.orc_set_id = rxo.ORC_set_ID and RXO.Ve
 LEFT JOIN MOSAIQ.dbo.Drug on  RXO.Req_Give_Code = Drug.drg_id
 
 WHERE 
- convert(varchar(8),orc.Start_dtTm,112) >= convert(varchar(8),dateadd(day,-1,getdate()),112) 
+ convert(varchar(8),orc.Start_dtTm,112) >= CASE
+		WHEN DATENAME(DW, GETDATE()) = 'Monday' -- check if today is a Monday
+			THEN convert(varchar(8),dateadd(day,-3,getdate()),112) -- pulls last 3 days if Monday
+			ELSE convert(varchar(8),dateadd(day,-1,getdate()),112) -- pulls yesterday if not a Monday
+		END
  AND convert(varchar(8),orc.Start_dtTm,112)  < convert(varchar(8),getdate(),112)
  AND orc.version = 0		       -- select tip records only 
  AND (  orc.Status_Enum = 5 OR orc.Status_enum = 18 
