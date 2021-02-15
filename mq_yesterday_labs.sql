@@ -10,7 +10,7 @@ Set NOCOUNT On
   QUOTENAME(ISNULL(dbo.fn_GetStaffName(Orders.Ord_Provider,'NAMELF'),''),'"') Ordering_Prov,--ordering md
   CPT.Hsp_Code as code, --code
   ISNULL(QUOTENAME(CPT.Description,'"'),'') as Lab, --desc
-  ISNULL(QUOTENAME(Orders.Condition,'"'),'')as  cond ,DATENAME(DW, GETDATE())
+  ISNULL(QUOTENAME(REPLACE(Orders.Condition,'’',''),'"'),'') as cond -- REPLACE special char ’
 
 
  FROM   ((((Orders 
