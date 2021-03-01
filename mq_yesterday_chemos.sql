@@ -9,7 +9,7 @@ SELECT
    QUOTENAME(MOSAIQ.dbo.fn_GetStaffName(orc.Ord_Provider ,'NAMELF'),'"') as Ordering_Prov,			
    QUOTENAME(rtrim(Drug.Drug_Label),'"') as Drug_label,
    ISNULL(orc.Cycle_Number,'') as cycle_number, -- Rick added 
-   ISNULL(orc.Cycle_Day,''), as cycle_day -- Rick added 
+   ISNULL(orc.Cycle_Day,'') as cycle_day, -- Rick added 
    ISNULL(orc.Delayed,'') as delayed -- Rick added
 --    ISNULL(QUOTENAME(Orc.Condition,'"'),'')as  comment
 
