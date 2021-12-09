@@ -1,4 +1,6 @@
-/****** SQL to extract Yesterday Labs, minimal filtering ******/
+/****** SQL to extract Yesterday Labs, minimal filtering
+	Added "catchup code" to get prior dates missed over MQ upgrade 12/3-12/6
+******/
 use Mosaiq
 Set NOCOUNT On
 
@@ -31,6 +33,7 @@ Set NOCOUNT On
 			THEN convert(varchar(8),dateadd(day,-3,getdate()),112) -- pulls last 3 days if Monday
 			ELSE convert(varchar(8),dateadd(day,-1,getdate()),112) -- pulls yesterday if not a Monday
 		END
+ -- AND convert(varchar,Orders.Start_dtTm,112) >= convert(varchar,dateadd(day,-5, getdate()),112) -- catch up code pulls 5 days ago
  AND convert(varchar(8),Orders.Start_dtTm,112) < convert(varchar(8),getdate(),112)
  --AND Orders.Start_DtTm >= dateadd(day,-1,GETDATE())  -- Yesterday
 -- AND Orders.Start_DtTm <= GETDATE() 
