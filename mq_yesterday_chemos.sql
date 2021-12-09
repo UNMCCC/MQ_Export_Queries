@@ -1,4 +1,6 @@
-/** Naive chemo orders extract **/
+/** Naive chemo orders extract 
+	Added "catchup code" to get prior dates missed over MQ upgrade 12/3-12/6
+**/
 SET NOCOUNT ON;
 Use Mosaiq;
 SELECT  
@@ -24,6 +26,7 @@ WHERE
 			THEN convert(varchar(8),dateadd(day,-3,getdate()),112) -- pulls last 3 days if Monday
 			ELSE convert(varchar(8),dateadd(day,-1,getdate()),112) -- pulls yesterday if not a Monday
 		END
+ -- convert(varchar,orc.Start_dtTm,112) >= convert(varchar,dateadd(day,-5, getdate()),112) -- catch up code pulls 5 days ago
  AND convert(varchar(8),orc.Start_dtTm,112)  < convert(varchar(8),getdate(),112)
  AND orc.version = 0		       -- select tip records only 
  AND (  orc.Status_Enum = 5 OR orc.Status_enum = 18 
