@@ -13,12 +13,12 @@
 ##
 ##   Desgined for Windows, but should run OK on Nix, MacOS too (untested on those environs)
 ##
-##
+##   RIck Compton, modified 1/13/2022 from yeseterday to 90 days
 ################################################################################################
 
 use strict;
-my $file    = 'D:\\Minivelos\\Sources\\mq_yesterdays_labs_temp.csv';
-my $outfile = 'D:\\Minivelos\\Sources\\mq_yesterdays_labs.csv'; 
+my $file    = 'D:\\Minivelos\\Sources\\mq_90days_labs_temp.csv';
+my $outfile = 'D:\\Minivelos\\Sources\\mq_90days_labs.csv'; 
 my $line;
  
 open(DOC, "$file")      or die("Error opening $file $!\n");
